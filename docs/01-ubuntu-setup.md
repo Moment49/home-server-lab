@@ -218,50 +218,6 @@ FAT32 drive. The USB is now reusable for anything.
 
 ---
 
-### Problem 3 — Static IP Not Saving After Netplan Config
-
-**What happened:**
-After editing the netplan YAML file to set a static IP, the changes were not
-applying after reboot.
-
-**Why it happens:**
-YAML is extremely sensitive to indentation. A single space in the wrong place
-causes the entire config to fail silently or partially.
-
-**Fix:**
-Re-edited the file carefully ensuring consistent 2-space indentation throughout:
-
-```bash
-sudo nano /etc/netplan/00-installer-config.yaml
-```
-
-```yaml
-network:
-  version: 2
-  wifis:
-    wlan0:
-      dhcp4: no
-      addresses: [192.168.1.100/24]
-      gateway4: 192.168.1.1
-      nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]
-      access-points:
-        "YOUR_WIFI_SSID":
-          password: "YOUR_WIFI_PASSWORD"
-```
-
-```bash
-# Apply config
-sudo netplan apply
-
-# Verify IP is set correctly
-ip addr show
-```
-
-> **Tip:** Use exactly 2 spaces for each indentation level in YAML.
-> Never use tabs. This is the most common cause of netplan failures.
-
----
 
 ## Screenshots
 
