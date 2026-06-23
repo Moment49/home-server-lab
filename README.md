@@ -35,6 +35,6 @@ DevOps, and cybersecurity.
 ## Documentation
 All steps documented in /docs folder.
 
-## Why I Built This
+## Why we Built This
 Learning by doing | — real infrastructure, deployments, 
 building practical DevOps and security skills.
