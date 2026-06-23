@@ -21,7 +21,7 @@ DevOps, and cybersecurity.
 - Domain: yourdomain.com.ng
 
 ## Progress
-- [ ] Ubuntu Server installation
+- ✅ Ubuntu Server installation
 - [ ] Network and static IP setup
 - [ ] SSH hardening and security
 - [ ] Cloudflare Tunnel + domain
