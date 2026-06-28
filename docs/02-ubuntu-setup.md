@@ -222,10 +222,10 @@ FAT32 drive. The USB is now reusable for anything.
 ## Screenshots
 
 ### Balena Etcher Error
-![Balena Etcher requestMetadata error](image.png)
+![Balena Etcher requestMetadata error](screenshots/etcher-errors.png)
 
 ### USB Partition Issue in Windows
-![USB showing corrupted partitions in Windows](image-1.png)
+![USB showing corrupted partitions in Windows](screenshots/system-diskpart(usb).png)
 
 ---
 

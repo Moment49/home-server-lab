@@ -38,3 +38,20 @@ All steps documented in /docs folder.
 ## Why we Built This
 Learning by doing | — real infrastructure, deployments, 
 building practical DevOps and security skills.
+
+## 🔒 Security Notice
+
+All IPs, credentials, and personal config values 
+in this documentation are placeholders.
+
+Replace the following with your own values:
+| Placeholder | What It Represents |
+|---|---|
+| `192.168.1.100` | Your server's local IP |
+| `yourdomain.com` | Your actual domain |
+| `YOUR_WIFI_SSID` | Your WiFi network name |
+| `youruser` | Your Ubuntu username |
+| `YOUR_API_KEY` | Any API keys or tokens |
+
+Never commit real credentials to a public repository.
+Use `.env` files for secrets and add them to `.gitignore`.
