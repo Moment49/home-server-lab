@@ -256,3 +256,6 @@ Star topology (this setup):
 WiFi shares a radio frequency at the physical transmission level — but at the network layer where topology is defined, the router controls all traffic direction. This makes both the physical and logical topology a star, with the router as the centre in both cases.
 
 ---
+
+## Next
+→ [02 — Ubuntu Setup](02-ubuntu-setup.md)

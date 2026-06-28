@@ -23,7 +23,6 @@ sudo apt install -y \
 # Install Tailscale for remote access
 curl -fsSL https://tailscale.com/install.sh | sh
 
-
 # Set up the Docker apt repository
 # Add Docker's official GPG key:
 sudo apt update
@@ -50,7 +49,6 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 # Check docker version and status of docker service
 sudo docker --version
 sudo systemctl status docker
-sudo systemctl start docker
 
 
 # Configure fail2ban

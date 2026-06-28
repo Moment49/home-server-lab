@@ -255,4 +255,4 @@ youruser@homeserver:~$
 
 ## Next Step
 
-→ [02 — Network Setup and Static IP Configuration](02-network-setup.md)
+→ [03 — Network Setup and Static IP Configuration](03-network-setup.md)
