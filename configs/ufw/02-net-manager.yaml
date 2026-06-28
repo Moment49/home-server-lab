@@ -1,0 +1,16 @@
+network:
+  version: 2
+  renderer: networkd 
+  wifis:
+    wlp2s0: 
+      dhcp4: no
+      dhcp6: no
+      addresses: [192.168..../24] 
+      nameservers:
+        addresses: [ISP_DNS_IP, GOOGLE_DNS_IP]
+      access-points:
+        ROUTER_SSID_NAME: <--- (Router SSID name)
+          password: router_wifi_password 
+      routes:
+        - to: default
+          via: 192.168...   <--- (Default gateway address of the router)
