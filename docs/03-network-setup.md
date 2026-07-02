@@ -220,6 +220,43 @@ ssh youruser@YOUR_SERVER_IP
 
 ---
 
+---
+
+## Step 3 — Installing Tailscale
+
+With the static IP working on the local network, Tailscale was installed next to enable secure remote SSH access from outside the home network — at work, on mobile data, anywhere.
+
+```bash
+# Install Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# Start Tailscale and authenticate
+sudo tailscale up --ssh
+
+# A link appears in the terminal — open it in browser
+# Log in with your Google account
+# Device is now registered on your Tailscale network
+
+# Check Tailscale IP assigned to this server
+tailscale ip -4
+# Returns something like: YOUR_TAILSCALE_IP
+# This IP never changes regardless of which network you are on
+
+# Enable Tailscale to start on boot
+sudo systemctl enable tailscaled
+```
+
+From any device with Tailscale installed and logged into the same account, SSH into the server using the Tailscale IP:
+
+```bash
+ssh youruser@YOUR_TAILSCALE_IP
+```
+
+This works from work WiFi, mobile data, a café — any network, anywhere.
+
+---
+
+
 ## Problems Hit
 
 ### Problem 1 — Root Privilege Required to Edit Netplan Config
@@ -261,6 +298,109 @@ Ubuntu ships with a default Netplan config file. Having two files raised questio
 Read the Netplan documentation and learned that config files are applied in **lexicographic (alphabetical) order** — the last file wins. Naming the custom file `99-custom.yaml` ensures it is always applied last and overrides the default.
 
 ---
+
+## LinkedIn Post
+
+🏠 **Home Server Lab Update: A Simple Installation Turned into a Networking Lesson**
+
+Today, I set out to install Tailscale on my Ubuntu home server so I could securely access it remotely without exposing SSH to the Internet.
+
+The official installation command kept timing out:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+Instead of giving up, I treated it like a troubleshooting exercise.
+
+Here's what I investigated:
+
+* Compared MTN and Airtel connectivity
+* Changed DNS to Cloudflare and Google
+* Verified DNS resolution with `nslookup`
+* Used `curl -v` to see exactly where the connection failed
+* Ran `tracert` to inspect the network path
+* Tested multiple Tailscale endpoints (`tailscale.com`, `login.tailscale.com`, and `pkgs.tailscale.com`)
+
+One interesting discovery was that **only `tailscale.com` was unreachable**, while the login and package repository were accessible. That meant the installer script couldn't be downloaded, but the packages themselves were still available.
+
+I also reached out to **Tosin** to better understand how **BGP (Border Gateway Protocol)** influences Internet routing. It was a great reminder that connectivity issues aren't always DNS or firewall-related—sometimes the path traffic takes across networks is the real problem.
+
+By manually configuring the Tailscale APT repository instead of using the installer script, I successfully installed Tailscale, authenticated my server, and can now securely SSH into it remotely.
+
+Next up:
+
+* 🔐 SSH hardening
+* 🔥 Firewall rules and automation scripts
+* ☁️ Cloudflare Tunnel integration
+* 🐳 Expanding my home server services
+
+Every problem solved is another opportunity to learn.
+
+#HomeLab #Linux #Ubuntu #Networking #CyberSecurity #Tailscale #DevOps #LearningInPublic
+
+---
+
+### Problem 4 — Unable to Install Tailscale Using the Official Installer
+
+**What happened:**
+
+While setting up my Ubuntu home server, I attempted to install Tailscale using the official command:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+````
+
+The installation repeatedly timed out because the installer could not be downloaded from `tailscale.com`.
+
+---
+
+### Investigation
+
+To isolate the problem, I performed the following troubleshooting steps:
+
+* Compared connectivity using MTN and Airtel.
+* Changed DNS to Cloudflare (1.1.1.1) and Google (8.8.8.8).
+* Verified DNS resolution using `nslookup`.
+* Used `curl -v` to determine where the connection failed.
+* Ran `tracert` to inspect the network path.
+* Tested multiple Tailscale endpoints:
+
+  * `tailscale.com`
+  * `login.tailscale.com`
+  * `pkgs.tailscale.com`
+
+---
+
+### Findings
+
+| Endpoint            | Result      |
+| ------------------- | ----------- |
+| tailscale.com       | ❌ Timed out |
+| login.tailscale.com | ✅ Reachable |
+| pkgs.tailscale.com  | ✅ Reachable |
+
+The issue was isolated to `tailscale.com`. DNS resolution worked correctly, and both the authentication service and package repository were accessible.
+
+---
+
+### Resolution
+
+Since the installer script could not be downloaded, I manually configured the Tailscale APT repository, installed the package using APT, authenticated the server, and verified successful connectivity.
+
+Tailscale is now running successfully on my Ubuntu home server.
+
+---
+
+### Lessons Learned
+
+* DNS resolution does not always mean a service is reachable.
+* `curl -v` is an excellent tool for identifying where a connection fails.
+* Testing individual service endpoints helps isolate network issues.
+* Troubleshooting is about eliminating possibilities with evidence rather than making assumptions.
+* Understanding Internet routing concepts such as BGP helps explain why specific services may be unreachable while others work normally.
+
+```
 
 ## Result
 

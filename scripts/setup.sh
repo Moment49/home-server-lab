@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 echo "🚀 Setting up home server environment..."
 
@@ -20,8 +20,20 @@ sudo apt install -y \
     ufw \
     fail2ban \
 
-# Install Tailscale for remote access
-curl -fsSL https://tailscale.com/install.sh | sh
+
+# Add Tailscale's GPG key
+sudo mkdir -p --mode=0755 /usr/share/keyrings
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/resolute.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+
+# Add the tailscale repository
+curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/resolute.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+
+# Install Tailscale
+sudo apt-get update && sudo apt-get install tailscale
+
+# Start Tailscale!
+sudo tailscale up
+
 
 # Set up the Docker apt repository
 # Add Docker's official GPG key:
@@ -54,6 +66,7 @@ sudo systemctl status docker
 # Configure fail2ban
 sudo systemctl enable fail2ban
 sudo systemctl start fail2ban
+
 
 echo "✅ Base setup complete!"
 
