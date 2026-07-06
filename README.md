@@ -22,7 +22,7 @@ DevOps, and cybersecurity.
 
 ## Progress
 - ✅ Ubuntu Server installation
-- [ ] Network and static IP setup
+- ✅ Network and static IP setup
 - [ ] SSH hardening and security
 - [ ] Cloudflare Tunnel + domain
 - [ ] Docker installation
